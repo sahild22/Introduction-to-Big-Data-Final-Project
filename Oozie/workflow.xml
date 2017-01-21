@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="flight-wf">
+   <start to="mr-node" />
+   <action name="mr-node">
+      <map-reduce>
+         <job-tracker>${jobTracker}</job-tracker>
+         <name-node>${nameNode}</name-node>
+         <prepare>
+            <delete path="${nameNode}/user/${wf:user()}/output/${outputDir}" />
+         </prepare>
+         <configuration>
+            <property>
+               <name>mapred.mapper.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.reducer.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.job.queue.name</name>
+               <value>${queueName}</value>
+            </property>
+            <property>
+               <name>mapreduce.map.class</name>
+               <value>myMapperProb</value>
+            </property>
+            <property>
+               <name>mapreduce.reduce.class</name>
+               <value>myReducerProb</value>
+            </property>
+            <property>
+               <name>mapred.output.key.class</name>
+               <value>org.apache.hadoop.io.Text</value>
+            </property>
+	    <property>
+               <name>mapred.output.value.class</name>
+               <value>org.apache.hadoop.io.IntWritable</value>
+            </property>
+            <property>
+               <name>mapred.map.tasks</name>
+               <value>1</value>
+            </property>
+            <property>
+               <name>mapred.input.dir</name>
+               <value>/user/${wf:user()}/input1/*</value>
+            </property>
+            <property>
+               <name>mapred.output.dir</name>
+               <value>/user/${wf:user()}/output/Prob_Out</value>
+            </property>
+         </configuration>
+      </map-reduce>
+      <ok to="mr-node1" />
+      <error to="mr-node1" />
+   </action>
+
+
+<action name="mr-node1">
+      <map-reduce>
+         <job-tracker>${jobTracker}</job-tracker>
+         <name-node>${nameNode}</name-node>
+         <prepare>
+            <delete path="${nameNode}/user/${wf:user()}/output/${outputDir}" />
+         </prepare>
+         <configuration>
+            <property>
+               <name>mapred.mapper.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.reducer.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.job.queue.name</name>
+               <value>${queueName}</value>
+            </property>
+            <property>
+               <name>mapreduce.map.class</name>
+               <value>myMapperTaxiIn</value>
+            </property>
+            <property>
+               <name>mapreduce.reduce.class</name>
+               <value>myReducerTaxiIn</value>
+            </property>
+            <property>
+               <name>mapred.output.key.class</name>
+               <value>org.apache.hadoop.io.Text</value>
+            </property>
+            <property>
+               <name>mapred.output.value.class</name>
+               <value>org.apache.hadoop.io.IntWritable</value>
+            </property>
+            <property>
+               <name>mapred.map.tasks</name>
+               <value>1</value>
+            </property>
+            <property>
+               <name>mapred.input.dir</name>
+               <value>/user/${wf:user()}/input1/*</value>
+            </property>
+            <property>
+               <name>mapred.output.dir</name>
+               <value>/user/${wf:user()}/output/TaxiIn_Out</value>
+            </property>
+         </configuration>
+      </map-reduce>
+      <ok to="mr-node2" />
+      <error to="mr-node2" />
+   </action>
+
+<action name="mr-node2">
+      <map-reduce>
+         <job-tracker>${jobTracker}</job-tracker>
+         <name-node>${nameNode}</name-node>
+         <prepare>
+            <delete path="${nameNode}/user/${wf:user()}/output/${outputDir}" />
+         </prepare>
+         <configuration>
+            <property>
+               <name>mapred.mapper.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.reducer.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.job.queue.name</name>
+               <value>${queueName}</value>
+            </property>
+            <property>
+               <name>mapreduce.map.class</name>
+               <value>myMapperTaxiOut</value>
+            </property>
+            <property>
+               <name>mapreduce.reduce.class</name>
+               <value>myReducerTaxiOut</value>
+            </property>
+            <property>
+               <name>mapred.output.key.class</name>
+               <value>org.apache.hadoop.io.Text</value>
+            </property>
+	    <property>
+               <name>mapred.output.value.class</name>
+               <value>org.apache.hadoop.io.IntWritable</value>
+            </property>
+            <property>
+               <name>mapred.map.tasks</name>
+               <value>1</value>
+            </property>
+            <property>
+               <name>mapred.input.dir</name>
+               <value>/user/${wf:user()}/input1/*</value>
+            </property>
+            <property>
+               <name>mapred.output.dir</name>
+               <value>/user/${wf:user()}/output/TaxiOut_Out</value>
+            </property>
+         </configuration>
+      </map-reduce>
+      <ok to="mr-node3" />
+      <error to="mr-node3" />
+   </action>
+
+
+<action name="mr-node3">
+      <map-reduce>
+         <job-tracker>${jobTracker}</job-tracker>
+         <name-node>${nameNode}</name-node>
+         <prepare>
+            <delete path="${nameNode}/user/${wf:user()}/output/${outputDir}" />
+         </prepare>
+         <configuration>
+            <property>
+               <name>mapred.mapper.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.reducer.new-api</name>
+               <value>true</value>
+            </property>
+            <property>
+               <name>mapred.job.queue.name</name>
+               <value>${queueName}</value>
+            </property>
+            <property>
+               <name>mapreduce.map.class</name>
+               <value>myMapperCancel</value>
+            </property>
+            <property>
+               <name>mapreduce.reduce.class</name>
+               <value>myReducerCancel</value>
+            </property>
+            <property>
+               <name>mapred.output.key.class</name>
+               <value>org.apache.hadoop.io.Text</value>
+            </property>
+            <property>
+               <name>mapred.output.value.class</name>
+               <value>org.apache.hadoop.io.IntWritable</value>
+            </property>
+            <property>
+               <name>mapred.map.tasks</name>
+               <value>1</value>
+            </property>
+            <property>
+               <name>mapred.input.dir</name>
+               <value>/user/${wf:user()}/input1/*</value>
+            </property>
+            <property>
+               <name>mapred.output.dir</name>
+               <value>/user/${wf:user()}/output/Cancel_Out</value>
+            </property>
+         </configuration>
+      </map-reduce>
+      <ok to="end" />
+      <error to="fail" />
+   </action>
+
+
+   <kill name="fail">
+      <message>Map/Reduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+   </kill>
+   <end name="end" />
+</workflow-app>
